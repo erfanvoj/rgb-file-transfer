@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RGB File Transfer</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div class="brand">
+          <div class="mark"><span></span><span></span><span></span><span></span></div>
+          <div class="brand-text">
+            <h1>RGB File Transfer</h1>
+            <p>Send files by screen and camera. No network needed.</p>
+          </div>
+        </div>
+        <div class="mode-toggle">
+          <button id="btn-mode-send" class="active">Send</button>
+          <button id="btn-mode-receive">Receive</button>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <!-- Sender Mode -->
+        <section id="section-send" class="mode-section active">
+          <h2 class="section-heading">Send a file</h2>
+
+          <label class="file-drop">
+            <input type="file" id="file-input" />
+            <span class="file-drop-label">Choose a file</span>
+            <div class="file-drop-hint">Any file type, sent frame by frame</div>
+          </label>
+          <div class="file-details" id="file-details"></div>
+
+          <div class="btn-group">
+            <button id="btn-start-send" class="btn-primary" disabled>Start sending</button>
+            <button id="btn-stop-send" class="btn-secondary" disabled>Stop</button>
+          </div>
+
+          <div class="visualizer-container">
+            <canvas id="sender-canvas"></canvas>
+          </div>
+          <div class="progress-bar-container">
+            <div id="sender-progress-bar" class="progress-bar"></div>
+          </div>
+          <div class="progress-text" id="sender-progress">Choose a file to begin</div>
+          <div id="sender-metrics" class="metrics-grid hidden">
+            <div class="metric-card">
+              <span class="metric-label">Packets Streamed</span>
+              <span class="metric-value" id="sender-metric-packets">0</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Source Chunks (K)</span>
+              <span class="metric-value" id="sender-metric-k">0</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Receiver Mode -->
+        <section id="section-receive" class="mode-section hidden">
+          <h2 class="section-heading">Receive a file</h2>
+
+          <div class="btn-group" style="margin-top: 0;">
+            <button id="btn-start-receive" class="btn-primary">Start camera</button>
+            <button id="btn-stop-receive" class="btn-secondary" disabled>Stop</button>
+          </div>
+
+          <div class="visualizer-container">
+            <video id="receiver-video" playsinline muted></video>
+            <canvas id="debug-canvas" class="debug-overlay"></canvas>
+            <div id="receiver-status-pill" class="status-pill status-searching">
+              <span class="status-dot"></span>
+              <span class="status-label">State: SEARCHING</span>
+            </div>
+          </div>
+          <div class="progress-bar-container">
+            <div id="receiver-progress-bar" class="progress-bar"></div>
+          </div>
+          <div class="progress-text" id="receiver-progress">Point your camera at the sender's screen</div>
+          <div id="receiver-metrics" class="metrics-grid hidden">
+            <div class="metric-card">
+              <span class="metric-label">Rank / K</span>
+              <span class="metric-value" id="receiver-metric-rank">0 / 0</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Progress</span>
+              <span class="metric-value" id="receiver-metric-progress">0%</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Valid / Scanned</span>
+              <span class="metric-value" id="receiver-metric-packets">0 / 0</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Throughput</span>
+              <span class="metric-value" id="receiver-metric-speed">0.0 KB/s</span>
+            </div>
+          </div>
+
+          <div id="download-area" class="result-panel hidden">
+            <h3><span class="result-dot"></span>File received</h3>
+            <a id="download-link" href="#" class="btn-download" download>Download file</a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

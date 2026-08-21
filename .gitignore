@@ -1,0 +1,15 @@
+node_modules/
+dist/
+dist-ssr/
+*.local
+.env
+.env.*
+.DS_Store
+Thumbs.db
+prompts/
+src_backup/
+*.bat
+*.txt
+*.cjs
+*.json.log
+tsc_result.json
